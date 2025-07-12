@@ -2,6 +2,10 @@
 session_start();
 require 'config.php';
 
+// Optional: enable error reporting during development
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 function returnToRegister($message) {
     $_SESSION['register_error'] = $message;
     header("Location: index.php#register");
@@ -24,20 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         empty($email) || empty($confirmEmail) ||
         empty($password) || empty($confirmPassword)
     ) {
-        returnToRegister('All fields are required, including email and confirm email.');
+        returnToRegister('All fields are required.');
     }
 
     // === Name validation ===
     if (!preg_match('/^[A-Za-z\s]{3,}$/', $fname)) {
-        returnToRegister('First name must be at least 3 characters and contain only letters.');
+        returnToRegister('First name must be at least 3 letters and only letters allowed.');
     }
 
     if (!preg_match('/^[A-Za-z\s]{3,}$/', $lname)) {
-        returnToRegister('Last name must be at least 3 characters and contain only letters.');
+        returnToRegister('Last name must be at least 3 letters and only letters allowed.');
     }
 
     if (strtoupper($mname) !== 'N/A' && !preg_match('/^[A-Za-z\s]{3,}$/', $mname)) {
-        returnToRegister('Middle name must be at least 3 letters or "N/A", and contain only letters.');
+        returnToRegister('Middle name must be at least 3 letters or "N/A".');
     }
 
     // === Email validation ===
@@ -51,17 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // === Password validation ===
     if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/\d/', $password)) {
-        returnToRegister('Password must be at least 8 characters long, contain 1 uppercase letter and 1 number.');
+        returnToRegister('Password must be at least 8 characters, with 1 uppercase letter and 1 number.');
     }
 
     if ($password !== $confirmPassword) {
         returnToRegister('Passwords do not match.');
     }
 
-    // === Check for existing email ===
+    // === Check if email already exists ===
     $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     if (!$stmt) {
-        returnToRegister('Database error.');
+        returnToRegister('Database error (email check).');
     }
 
     $stmt->bind_param("s", $email);
@@ -70,16 +74,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->num_rows > 0) {
         $stmt->close();
-        returnToRegister('Email is already registered. Please use another.');
+        returnToRegister('Email is already registered.');
     }
     $stmt->close();
 
-    // === Register the user ===
+    // === Insert new user ===
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
     $stmt = $conn->prepare("INSERT INTO users (fname, mname, lname, email, password) VALUES (?, ?, ?, ?, ?)");
+
     if (!$stmt) {
-        returnToRegister('Database error while creating account.');
+        returnToRegister('Database error while inserting user.');
     }
 
     $stmt->bind_param("sssss", $fname, $mname, $lname, $email, $hashedPassword);
@@ -89,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: index.php#login");
         exit;
     } else {
-        returnToRegister('Registration failed. Please try again later.');
+        returnToRegister('Failed to register. Please try again later.');
     }
 } else {
     header("Location: index.php");
