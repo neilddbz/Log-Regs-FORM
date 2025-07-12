@@ -1,0 +1,188 @@
+/* Reset and global styles */
+* {
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1650&q=80') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+
+/* Container (glass effect) */
+.container {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Toggle buttons */
+.form-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.form-toggle button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.form-toggle button:hover {
+  background-color: #388e3c;
+}
+
+/* Form visibility */
+form {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+form.active {
+  display: flex;
+}
+
+/* Input fields */
+input {
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+input::placeholder {
+  color: #ccc;
+}
+
+/* Message styles */
+.error {
+  color: #ff4d4d;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.success {
+  color: #8bc34a;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+/* Password wrapper */
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-wrapper input {
+  flex: 1;
+}
+
+.toggle-password {
+  margin-left: 10px;
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+.toggle-password:hover {
+  background-color: rgba(76, 175, 80, 0.15);
+}
+
+/* Submit button */
+form button[type="submit"] {
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: #388e3c;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+
+  .form-toggle {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-toggle button {
+    width: 100%;
+  }
+}
+
+/* === Dashboard Page === */
+.dashboard {
+  text-align: center;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 480px;
+  width: 90%;
+  color: white;
+}
+
+.dashboard h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+/* Logout Button */
+.logout-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
