@@ -13,5 +13,4 @@ A complete login and registration system using PHP, JavaScript, and MySQL with r
 - ✅ Dashboard with logout button
 - ✅ Error and success messages handled with sessions
 
-## 🗂 File Structure
 
